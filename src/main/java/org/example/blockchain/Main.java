@@ -9,23 +9,37 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) {
-    final Blockchain workBlockchain = new WorkBlockchain(2);
-    final Blockchain stakeBlockchain = new StakeBlockchain(2);
-    testProofOfWork(workBlockchain);
-
+    //testProofOfWork();
+    testStakeOfWork();
   }
-
-  static void testProofOfWork(Blockchain workBlockchain){
+  static void testStakeOfWork() {
+    final Blockchain stakeBlockchain = new StakeBlockchain(2);
+    insertFirstBlockData(stakeBlockchain);
+    stakeBlockchain.minePendingTransactions(new String[]{"user1", "user2", "user3"});
+    insertSecondBlockData(stakeBlockchain);
+    stakeBlockchain.minePendingTransactions(new String[]{"user1", "user2", "user3"});
+    printResult(stakeBlockchain);
+  }
+  static void testProofOfWork() {
+    final Blockchain workBlockchain = new WorkBlockchain(2);
+    insertFirstBlockData(workBlockchain);
+    workBlockchain.minePendingTransactions(new String[]{"user3"});
+    insertSecondBlockData(workBlockchain);
+    workBlockchain.minePendingTransactions(new String[]{"user3"});
+    printResult(workBlockchain);
+  }
+  static void insertFirstBlockData(Blockchain workBlockchain) {
     workBlockchain.createTransaction("user1", "user2", 30);
     workBlockchain.createTransaction("user1", "user2", 20);
-    workBlockchain.createTransaction("user2", "user1", 10);
-    workBlockchain.minePendingTransactions("user3");
+    workBlockchain.createTransaction("user2", "user3", 10);
+  }
 
+  static void insertSecondBlockData(Blockchain workBlockchain) {
     workBlockchain.createTransaction("user3", "user1", 70);
     workBlockchain.createTransaction("user1", "user2", 30);
     workBlockchain.createTransaction("user2", "user1", 10);
-    workBlockchain.minePendingTransactions("user3");
-
+  }
+  static void printResult(Blockchain workBlockchain) {
     System.out.println(workBlockchain);
     System.out.println("Chain is valid: " + workBlockchain.isChainValid());
 
@@ -34,3 +48,4 @@ public class Main {
     }
   }
 }
+

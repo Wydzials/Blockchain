@@ -2,6 +2,8 @@ package org.example.blockchain.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.apache.commons.lang3.Validate;
 
 public class WorkBlockchain extends Blockchain {
@@ -18,9 +20,12 @@ public class WorkBlockchain extends Blockchain {
     this.difficulty = difficulty;
   }
 
-  public void minePendingTransactions(final String miningRewardAddress) {
-    Validate.notEmpty(miningRewardAddress);
+  public void minePendingTransactions(final String[] miningRewardAddresses) {
+    Random random = new Random();
+    int chosenIndex = random.nextInt(miningRewardAddresses.length);
+    String miningRewardAddress = miningRewardAddresses[chosenIndex];
 
+    Validate.notEmpty(miningRewardAddress);
     final Block newBlock = new Block(getLatestBlock(), super.getPendingTransactions(), difficulty);
     super.getChain().add(newBlock);
 

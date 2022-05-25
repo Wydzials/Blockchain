@@ -19,6 +19,9 @@ public abstract class Blockchain {
         return pendingTransactions;
     }
 
+    abstract public void minePendingTransactions(final String[] miningRewardAddresses);
+
+
     public void createTransaction(final String fromAddress, final String toAddress, final long amount) {
         Validate.notEmpty(fromAddress);
         Validate.notEmpty(toAddress);
@@ -27,8 +30,6 @@ public abstract class Blockchain {
         final Transaction newTransaction = new Transaction(fromAddress, toAddress, amount);
         pendingTransactions.add(newTransaction);
     }
-
-    abstract public void minePendingTransactions(final String miningRewardAddress);
 
     public boolean isChainValid() {
         for (int i = 1; i < chain.size(); i++) {
