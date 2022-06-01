@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.Validate;
 
-public abstract class Blockchain {
+public class Blockchain {
 
-  private static final long miningReward = 100;
+  private static final long miningReward = 200;
 
   private final List<Transaction> pendingTransactions = new ArrayList<>();
   private final List<Block> chain = new ArrayList<>();
